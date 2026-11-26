@@ -1,0 +1,79 @@
+------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\TEST\Documents\FUNDAMENTOS-PROGRAMACION\Proyecto_final\output/
+> modelo_hito2.log
+  log type:  text
+ opened on:  25 Nov 2026, 23:30:54
+
+. 
+. import delimited "data/processed/datos_limpios.csv", clear
+(encoding automatically selected: ISO-8859-1)
+(5 vars, 129 obs)
+
+. 
+. describe
+
+Contains data
+ Observations:           129                  
+    Variables:             5                  
+------------------------------------------------------------------------------------
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+------------------------------------------------------------------------------------
+fecha           str10   %10s                  
+cobre           float   %9.0g                 
+dolar           float   %9.0g                 
+var_cobre       float   %9.0g                 
+var_dolar       float   %9.0g                 
+------------------------------------------------------------------------------------
+Sorted by: 
+     Note: Dataset has changed since last saved.
+
+. summarize var_cobre var_dolar
+
+    Variable |        Obs        Mean    Std. dev.       Min        Max
+-------------+---------------------------------------------------------
+   var_cobre |        129    1.023049    4.573938  -16.64252   15.02724
+   var_dolar |        129    .2782462    2.828795  -5.632967   11.18444
+
+. 
+. regress var_dolar var_cobre
+
+      Source |       SS           df       MS      Number of obs   =       129
+-------------+----------------------------------   F(1, 127)       =     82.88
+       Model |  404.474687         1  404.474687   Prob > F        =    0.0000
+    Residual |  619.791751       127  4.88025001   R-squared       =    0.3949
+-------------+----------------------------------   Adj R-squared   =    0.3901
+       Total |  1024.26644       128  8.00208155   Root MSE        =    2.2091
+
+------------------------------------------------------------------------------
+   var_dolar | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+   var_cobre |  -.3886426     .04269    -9.10   0.000    -.4731184   -.3041669
+       _cons |   .6758466   .1993459     3.39   0.001     .2813769    1.070316
+------------------------------------------------------------------------------
+
+. 
+. *Cuando el cobre sube un 1% en un mes, el dólar tiende a bajar un 0,39% durante es
+> e mismo mes, esto coincide con lo que esperaba en la hipótesis ya que la relación 
+> es negativa.
+. * Si el dólar está cerca de su promedio (793 pesos) una baja de 0,39% equivale a u
+> nos 3 pesos por cada 1% que sube el cobre, por lo tanto si el cobre sube un 10%, e
+> l dólar bajaría aproximadamente 31 pesos.
+. * El intervalo de confianza (IC) no incluye el cero y el estadístico t es -9,1, lo
+>  que muestra que la relación es estadísticamente significativa, su tamaño no es me
+> nor aunque no es determinante, el R² de 0,39 indica que gran parte del movimiento 
+> del dólar se explica por otros factores.
+. * El R² = 0,39 significa que el cobre se asocia con cerca del 39 % de los cambios 
+> mensuales del dólar mientras que el otro 61% se debe a factores que el modelo no c
+> onsidera, un R² bajo es normal en datos económicos y sociales.
+. * Constante (0,68): representa el cambio promedio del dólar cuando el precio del c
+> obre no cambia.
+. 
+. log close
+      name:  <unnamed>
+       log:  C:\Users\TEST\Documents\FUNDAMENTOS-PROGRAMACION\Proyecto_final\output/
+> modelo_hito2.log
+  log type:  text
+ closed on:  25 Nov 2026, 23:30:55
+------------------------------------------------------------------------------------
